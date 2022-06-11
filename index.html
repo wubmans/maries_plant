@@ -1,0 +1,180 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@100;600;900&display=swap" rel="stylesheet">
+
+        <style>
+
+            * {
+                font-family: 'Great Vibes', cursive;
+            }
+
+            img#de_pot {
+                margin: 0 auto;
+                display: block;
+                margin-top: 450px;
+            
+            }
+
+            #plantje_container {
+                position: absolute;
+                /* border: 1px solid red; */
+                top: 324px;
+                left: 50%;
+                margin-left: -30px;
+
+            }
+
+            #gieter {
+                position: absolute;
+                top: 60;
+                left: 50%;
+                margin-left: 20px;
+                transition: all 0.2s;
+                z-index: 99;
+                cursor: pointer;
+            }
+
+            #gieter.rotated {
+                transform: rotate(-55deg);
+            }
+
+            .plantje {
+                display: none;
+                position: relative;
+            }
+
+            #plantje_1 {
+                top: 100px;
+            }
+
+            #plantje_2 {
+                left: -40px;
+                top: 36px;
+
+            }
+
+            #plantje_3 {
+                top: -117px;
+                left: -90px;
+            }
+
+            #plantje_4 {
+                top: -160px;
+                left: -108px;
+            }
+
+            .hartje {
+                position: absolute;
+                z-index: 100;
+                display: none;
+            }
+
+            #hartjes {
+                width: 10px;
+                height: 10px;
+                position: absolute;
+                left: 50%;
+                top: 200px;
+                margin-left: 50px;
+
+            }
+
+        </style>
+
+
+
+    </head>
+
+    <body>
+        <img src="file:///Users/wubmans/Documents/spul%20Diede/plant_met_marie/gieter.png" alt="" id="gieter">
+        <img id="de_pot" src="file:///Users/wubmans/Documents/spul%20Diede/plant_met_marie/pot.png" alt="">
+        <div id="hartjes">
+
+        </div>
+        
+        <div id="plantje_container">
+            <img id="plantje_1" class="plantje" src="file:///Users/wubmans/Documents/spul%20Diede/plant_met_marie/plantje1.png" alt="">
+            <img id="plantje_2" class="plantje" src="file:///Users/wubmans/Documents/spul%20Diede/plant_met_marie/plantje2.png" alt="">
+            <img id="plantje_3" class="plantje" src="file:///Users/wubmans/Documents/spul%20Diede/plant_met_marie/plantje3.png" alt="">
+            <img id="plantje_4" class="plantje" src="file:///Users/wubmans/Documents/spul%20Diede/plant_met_marie/plantje4.png" alt="">
+        
+        </div>
+        <div style="text-align: center; font-weight: normal">
+            <h1 style="color: #fc5145; font-weight: normal">Marie's magische plant die heel snel groeit</h1>
+            
+        </div>
+        </div>
+
+        <script>
+
+            let plantje = 0;
+            let audio = new Audio('file:///Users/wubmans/Documents/spul%20Diede/plant_met_marie/gieter.mp3');
+
+            let interval;
+
+            for(let i = 0; i < 20; i++) {
+              //  alert(i)
+               // let image = new Image();
+                //image.src = 'file:///Users/wubmans/Documents/spul%20Diede/plant_met_marie/hartje2.png';
+                $("<img src='file:///Users/wubmans/Documents/spul%20Diede/plant_met_marie/hartje2.png' class='hartje'>")
+                    //.addClass("hartje") 
+                    .appendTo("#hartjes");
+            } 
+
+            $(document).on("click", "#gieter", () => { 
+                
+                $("#gieter").addClass("rotated")
+                setTimeout(() => {
+                    $("#gieter").removeClass("rotated")
+                }, 1000);
+
+                plantje++;
+
+                setTimeout(() => {
+                $(".plantje").hide();
+                $("#plantje_" + plantje).show();
+                }, 1500)
+
+                audio.play();
+
+                $(".hartje").css({ top: 0, left: 0}).show();
+
+
+                clearInterval(interval);
+
+                interval = setInterval(() => {
+                    $(".hartje").each((i, e) => { 
+                        let dx = Math.random() * 4 - 2 | 0;
+
+                        if ($(e).position().top < 100) {
+                            dx -= 25 / $(e).position().top
+                        }
+
+                        dx = (dx > 0 ? "+=" : "-=") + Math.abs(dx);
+
+                        let dy = "+=" + (Math.random() * 6 | 0) + "px";
+                        //console.log(dx, dy)
+                        $(e).css({ left: dx, top: dy })
+
+
+
+                        //console.log($(e).position().top)
+                        if ($(e).position().top > 270) {
+                            $(e).hide();
+                        }
+                    })
+
+                },
+                10
+                )
+
+            })
+
+
+        </script>
+    </body>
+</html>
